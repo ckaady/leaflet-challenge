@@ -8,13 +8,23 @@ d3.json(queryUrl).then(data => {
   createFeatures(data.features);
 });
 
+// Create color function
+function getColor(d) {
+  return  d > 90 ? "Red" :
+          d > 70 ? "Orange" :
+          d > 50 ? "Gold" :
+          d > 30 ? "Yellow" :
+          d > 10 ? "GreenYellow" :
+                   "Lime" ;
+}
+
 function createFeatures(earthquakeData) {
 
   // Define a function we want to run once for each feature in the features array
   // Give each feature a popup describing the place and time of the earthquake
   function onEachFeature(feature, layer) {
     layer.bindPopup("<h3>" + feature.properties.title +
-      "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
+      "</h3><hr><p>" + "Magnitute: " + feature.properties.mag + "</p><hr>" + "<p>" + "Depth: " + feature.geometry.coordinates[2] + "</p>");
   }
 
   // Create a GeoJSON layer containing the features array on the earthquakeData object
@@ -27,8 +37,8 @@ function createFeatures(earthquakeData) {
     onEachFeature: onEachFeature,
     pointToLayer: (feature, latlng) => {
       return new L.Circle(latlng, {
-        radius: feature.properties.mag*20000,
-        fillColor: "red",
+        radius: feature.properties.mag*100000,
+        fillColor: getColor(feature.geometry.coordinates[2]),
         stroke: false 
       });
     }
@@ -70,11 +80,11 @@ function createMap(earthquakes, mags) {
   };
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load
-  var myMap = L.map("map", {
+  let myMap = L.map("map", {
     center: [
       37.09, -95.71
     ],
-    zoom: 5,
+    zoom: 3,
     layers: [streetmap, earthquakes]
   });
 
