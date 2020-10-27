@@ -9,7 +9,7 @@ I used leaflet to plot the earthquakes, based on the reported longittudes and la
 ![screenshot of map](map.png)
 
 ## note:
-I have included a configEDIT.js file within the javascript folder for Leaflet-Step-1. You can edit this file to use your own api key for mapbox (the service used to create this map).
+I have included a configEDIT.js file within the javascript folder for Leaflet-Step-1. You can edit this file to use your own api key for mapbox (the API used to create this map).
 
 
 
